@@ -31,6 +31,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'grappelli',  #подключаем грапели админку красивый дизайн и в url не забыть
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -105,9 +107,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-RU' #'en-us' админка поменяется на русский
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Etc/GMT-6'
 
 USE_I18N = True
 
@@ -118,6 +120,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = Path(BASE_DIR, 'static/media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
