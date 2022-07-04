@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-
+#категория историй
 class StoryCategory(models.Model): 
     title = models.CharField(
         primary_key=False,
@@ -28,6 +28,30 @@ class StoryCategory(models.Model):
         return f'{self.title}'
 
 
+#новые слова
+class New_word_story(models.Model): 
+    word = models.CharField(
+        primary_key=False,
+        unique=False,
+        editable=True,
+        blank=True,      
+        default="новое слово",
+        verbose_name="новое слово",
+        help_text='<small class="text-muted">это новое слово</small><hr><br>',
+        max_length=50,
+    )
+
+    class Meta:
+        app_label = 'app_foodrecipes' # для отображения в админке и ещё надо изменить и добавить в apps.py
+        # ordering = ('title') # сортировка сначала по title потом по dexcription
+        verbose_name = 'Новое слово'    
+        verbose_name_plural = 'Новые слова'
+
+    def __str__(self) -> str:
+        return f'{self.word}'
+
+
+#истории
 class Story(models.Model): 
     title = models.CharField(
         primary_key=False,
@@ -67,7 +91,26 @@ class Story(models.Model):
         validators=[MinValueValidator(1), MaxValueValidator(9999)],
     )
 
-    category = models.ForeignKey(  # ссылается на категорию как бы без категории не может быть истории. Сначала создаём историю БД, потом ссылаемся на категорию. 
+    category = models.ManyToManyField(  # category = models.ForeignKey ссылается на категорию как бы без категории не может быть истории. Сначала создаём историю БД, потом ссылаемся на категорию. 
+     
+        
+        primary_key=False,        
+        unique=False,
+        editable=True,
+        blank=True,  
+        null=True,      
+        default= None,
+        verbose_name="Категория",
+        help_text='<small class="text-muted">Категория</small><hr><br>',
+
+        to=StoryCategory,
+        
+        # on_delete=models.SET_NULL, #CASCADE - удаляет всю запись при удаление связаной (родительской) записи.    SET_NULL - зануляет превращает в null    DO_NOTHING
+       
+    )
+
+    author = models.ForeignKey(  # ссылается на категорию как бы без категории не может быть истории. Сначала создаём историю БД, потом ссылаемся на категорию. 
+        db_index=True,
         error_messages=False,
         primary_key=False,
         unique_for_date=False,
@@ -78,12 +121,25 @@ class Story(models.Model):
         blank=True,
         null=True,
         default= None,
-        verbose_name="Категория",
-        help_text='<small class="text-muted">Категория</small><hr><br>',
+        verbose_name="Автор истории",
+        help_text='<small class="text-muted">автор</small><hr><br>',
 
-        to=StoryCategory,
+        to=User,
         on_delete=models.SET_NULL, #CASCADE SET_NULL DO_NOTHING
        
+    )
+
+    new_words_story = models.ManyToManyField(  # ссылается на категорию как бы без категории не может быть истории. Сначала создаём историю БД, потом ссылаемся на категорию.        
+        primary_key=False,      
+        unique=False,
+        editable=True,
+        blank=True,
+        null=True,
+        default= None,
+        verbose_name="Новые слова",
+        help_text='<small class="text-muted">Новые слова</small><hr><br>',
+
+        to=New_word_story,       
     )
 
     description = models.TextField(
@@ -111,7 +167,7 @@ class Story(models.Model):
         return str(title).strip()
 
 
-
+#рейтинг историй
 class StoryRaiting(models.Model):
     rating_value = models.IntegerField(
         primary_key=False,
@@ -174,7 +230,7 @@ class StoryRaiting(models.Model):
         return f'{self.story}'  
 
 
-
+#комментарии к истории
 class StoryComment(models.Model):
     comment_text = models.CharField(
         primary_key=False,
@@ -222,7 +278,7 @@ class StoryComment(models.Model):
         help_text='<small class="text-muted">История</small><hr><br>',
 
         to=Story,
-        on_delete=models.SET_NULL, #CASCADE SET_NULL DO_NOTHING
+        on_delete=models.CASCADE, #CASCADE SET_NULL DO_NOTHING
        
     )
 
