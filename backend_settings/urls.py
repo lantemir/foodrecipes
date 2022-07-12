@@ -21,4 +21,5 @@ from django.urls import path, include  # include добавили для path('g
 urlpatterns = [
     path('grappelli/', include('grappelli.urls')), # grappelli дизайн админки
     path('admin/', admin.site.urls),
+    path('', include('app_foodrecipes.urls')),
 ]

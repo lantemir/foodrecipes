@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-)hhi)6t@*e)zp@a%8hcqlitn)k_b!h3l%=zd0cnx@z4zvgs=o8
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+CORS_ALLOW_ALL_ORIGINS = True #включить для реакта
 
 # Application definition
 
@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'app_foodrecipes',
+
+    'rest_framework', # скченая pip install djangorestframework
 ]
 
 MIDDLEWARE = [

@@ -57,3 +57,9 @@ python manage.py collectstatic --noinput
 
 # запускает "development"(сервер для разработки) 0.0.0.0:88
 python manage.py runserver 127.0.0.1:8000
+
+
+
+# для реакта
+# добавить для обращения в backend на фронте в package.json "proxy": "http://127.0.0.1:8000",  
+# https://github.com/bogdandrienko?tab=repositories
