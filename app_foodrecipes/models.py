@@ -11,8 +11,8 @@ class StoryCategory(models.Model):
         unique=False,
         editable=True,
         blank=True,
-        null=True,
-        default="заголовок",
+        
+        default="Заголовок",
         verbose_name="Заголовок",
         help_text='<small class="text-muted">это наш заголовок</small><hr><br>',
         max_length=250,
@@ -35,7 +35,7 @@ class New_word_story(models.Model):
         unique=False,
         editable=True,
         blank=True,      
-        default="новое слово",
+        default="Новое слово",
         verbose_name="новое слово",
         help_text='<small class="text-muted">это новое слово</small><hr><br>',
         max_length=50,
@@ -58,18 +58,18 @@ class Story(models.Model):
         unique=False,
         editable=True,
         blank=True,
-        null=True,
+       
         default="заголовок",
         verbose_name="Заголовок",
         help_text='<small class="text-muted">это наш заголовок</small><hr><br>',
-        max_length=250
+        max_length=300,
     )
 
     image = models.ImageField(       
         unique=False,
         editable=True,
         blank=True, #отображение в модельке админ
-        null=True,
+        
         default="img/story/default/redefault_story.jpg",
         verbose_name="Заставка:",
         help_text='<small class="text-muted">это наш заставка</small><hr><br>',
@@ -92,18 +92,23 @@ class Story(models.Model):
     )
 
     category = models.ManyToManyField(  # category = models.ForeignKey ссылается на категорию как бы без категории не может быть истории. Сначала создаём историю БД, потом ссылаемся на категорию. 
-     
+
+        db_column='category_db_column',
+        db_index=True,
+        error_messages=False,
         
         primary_key=False,        
         unique=False,
         editable=True,
         blank=True,  
-        null=True,      
+          
         default= None,
-        verbose_name="Категория",
+        verbose_name="Категория истории",
         help_text='<small class="text-muted">Категория</small><hr><br>',
 
         to=StoryCategory,
+
+        
         
         # on_delete=models.SET_NULL, #CASCADE - удаляет всю запись при удаление связаной (родительской) записи.    SET_NULL - зануляет превращает в null    DO_NOTHING
        
@@ -113,9 +118,7 @@ class Story(models.Model):
         db_index=True,
         error_messages=False,
         primary_key=False,
-        unique_for_date=False,
-        unique_for_month=False,
-        unique_for_year=False,
+ 
         unique=False,
         editable=True,
         blank=True,
@@ -129,12 +132,12 @@ class Story(models.Model):
        
     )
 
-    new_words_story = models.ManyToManyField(  # ссылается на категорию как бы без категории не может быть истории. Сначала создаём историю БД, потом ссылаемся на категорию.        
+    new_words_story = models.ManyToManyField(  #      
         primary_key=False,      
         unique=False,
         editable=True,
         blank=True,
-        null=True,
+       
         default= None,
         verbose_name="Новые слова",
         help_text='<small class="text-muted">Новые слова</small><hr><br>',
@@ -147,7 +150,7 @@ class Story(models.Model):
         unique=False,
         editable=True,
         blank=True, #можно оставить пустым
-        null=True,
+       
         default="Описание",
         verbose_name="Описание",
         help_text='<small class="text-muted">это наш заголовок</small><hr><br>',
@@ -185,9 +188,7 @@ class StoryRaiting(models.Model):
     user = models.ForeignKey(        
         error_messages=False,
         primary_key=False,
-        unique_for_date=False,
-        unique_for_month=False,
-        unique_for_year=False,
+      
         unique=False,
         editable=True,
         blank=True,
@@ -204,9 +205,7 @@ class StoryRaiting(models.Model):
     story = models.ForeignKey(
         error_messages=False,
         primary_key=False,
-        unique_for_date=False,
-        unique_for_month=False,
-        unique_for_year=False,
+      
         unique=False,
         editable=True,
         blank=True,
@@ -237,7 +236,7 @@ class StoryComment(models.Model):
         unique=False,
         editable=True,
         blank=True,
-        null=True,
+       
         default="Текст комментарий",
         verbose_name="Заголовок",
         help_text='<small class="text-muted">тексь комментария</small><hr><br>',
@@ -247,9 +246,7 @@ class StoryComment(models.Model):
     user = models.ForeignKey(        
         error_messages=False,
         primary_key=False,
-        unique_for_date=False,
-        unique_for_month=False,
-        unique_for_year=False,
+       
         unique=False,
         editable=True,
         blank=True,
@@ -266,9 +263,7 @@ class StoryComment(models.Model):
     story = models.ForeignKey(
         error_messages=False,
         primary_key=False,
-        unique_for_date=False,
-        unique_for_month=False,
-        unique_for_year=False,
+      
         unique=False,
         editable=True,
         blank=True,

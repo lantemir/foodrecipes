@@ -62,4 +62,24 @@ python manage.py runserver 127.0.0.1:8000
 
 # для реакта
 # добавить для обращения в backend на фронте в package.json "proxy": "http://127.0.0.1:8000",  
-# https://github.com/bogdandrienko?tab=repositories
+https://github.com/bogdandrienko?tab=repositories
+https://www.youtube.com/playlist?list=PLFH0jFGRecS0btzEqlp6f4Ua8FwJYkH1m
+
+
+
+
+14.07.22 отправка писем, многопоточность итд
+15.07.22 создаём заново приложение django и react парсинг многопоточность
+
+
+
+роутинг react https://www.youtube.com/watch?v=0auS9DNTmzE&list=TLPQMTYwNzIwMjJdHYJAkUWCpg&index=4
+
+
+питон основы https://www.youtube.com/watch?v=Lw8TeLS4_IA&list=PLA0M1Bcd0w8zPwP7t-FgwONhZOHt9rz9E&index=3
+https://www.youtube.com/watch?v=78PTvj2wYH8&list=PLA0M1Bcd0w8zPwP7t-FgwONhZOHt9rz9E&index=6 остановился
+
+
+
+# 1 вопросы 
+картинки сохранение и вывод

@@ -1,10 +1,12 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
 import loginReducer from "./login-reducer";
-import  thunkMiddleware from 'redux-thunk'; // обязательно для санок
+import storyReducer from "./story-reducer";
+import  thunkMiddleware from 'redux-thunk'; // обязательно для санок/
 
 
 let reducers = combineReducers({
-    loginReducer: loginReducer
+    loginReducer: loginReducer,
+    storyReducer: storyReducer
 })
 
 const store = createStore(reducers, applyMiddleware(thunkMiddleware)); 

@@ -37,15 +37,15 @@ export const SetUsersAction = (users) => ({type: SET_USERS, users})
 
 
 export const requestUsers = async (dispatch) => {
-         
        
         const data = await usersAPI.getUsers();
         console.log("data")
         console.log(data)
-        dispatch(SetUsersAction(data));
-      
+        dispatch(SetUsersAction(data));     
     
 }
+
+
 
 
 //рабочий код
