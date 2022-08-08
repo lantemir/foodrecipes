@@ -5,6 +5,7 @@ const SET_WORDS = 'SET_WORDS';
 const SET_STORY = 'SET_STORY';
 const SET_CURRENT_PAGE_STORY = 'SET_CURRENT_PAGE_STORY';
 const SET_TOTAL_STORIES_COUNT = 'SET_TOTAL_STORIES_COUNT';
+const SET_LOADING_STORIES = "SET_LOADING_STORIES";
 
 
 let initialState = {    
@@ -14,6 +15,7 @@ let initialState = {
     currentPage: 1,
     words: [],
     storyById: {},
+    loading: false
 
 };
 
@@ -42,6 +44,10 @@ const storyReducer = (state = initialState, action) => {
             return{
                 ...state, totalStoriesCount: action.totalStoriesCount
             }
+        case SET_LOADING_STORIES:
+            return{
+                ...state, loading: action.loading
+            }
         default: 
             return state;
     }
@@ -53,17 +59,21 @@ export const SetWordsAction = (words) => ({type: SET_WORDS, words})
 export const SetStoryAction = (storybyid) => ({type: SET_STORY, storybyid})
 export const setCurrentPageAction = (currentPage) => ({type: SET_CURRENT_PAGE_STORY, currentPage}) 
 export const setTotalStoriesCount = (totalStoriesCount) => ({type: SET_TOTAL_STORIES_COUNT, totalStoriesCount})
+export const setLoadingStories = (loading) => ({type:SET_LOADING_STORIES, loading})
 
 
 
 
 
-export const requestStories =  (dispatch, page, pageSize) => {      
-        
+export const requestStories =  (dispatch, page, pageSize) => {  
+        dispatch(setLoadingStories(true))
         dispatch(setCurrentPageAction(page))
+
          storyAPI.getStories(page, pageSize).then(res => {
+             dispatch(setLoadingStories(false))
              dispatch(SetStoriesAction(res.current_page));    
              dispatch(setTotalStoriesCount(res.stories_count)); 
+             
         });
 
         

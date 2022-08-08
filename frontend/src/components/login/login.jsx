@@ -15,7 +15,10 @@ const Login = () => {
         formData.append("password", password);
 
         axios.post("/login/", formData).then( result => {
-            console.log(result)
+             console.log(result.data.token)
+             localStorage.setItem('token', result.data.token);
+            // let token = localStorage.getItem('token');  
+            
         })
 
     }

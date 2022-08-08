@@ -1,6 +1,7 @@
+from datetime import datetime
 from django.contrib import admin
 
-from app_foodrecipes.models import Story, StoryCategory, StoryRaiting, StoryComment, New_word_story
+from app_foodrecipes.models import Story, StoryCategory, StoryRaiting, StoryComment, New_word_story, ModelToken
 
 # Register your models here.
 # изначально пусто было
@@ -108,12 +109,45 @@ class New_word_story_Admin(admin.ModelAdmin):
 
 
 
+class Model_token_Admin(admin.ModelAdmin):
+    list_display =( # поля для отображения
+        'user',  
+        'token',
+        'datetime_field',    
+    )
+    list_display_links = ( # поля ссылка
+        'user',  
+        'token',
+    )
+    list_editable = ( # поля для редактирование объекта на лету         
+        'datetime_field', 
+    )
+    list_filter = ( 
+        'user',  
+        'token',
+        'datetime_field', 
+    )
+    fieldsets = ( # подзаголовки для визуального отделения блоков друг от друга
+        ('Основное', {'fields': (
+            'user',  
+            'token',
+            'datetime_field',          
+        )}),
+    )
+    search_fields =[ # поле для поиска
+        'word',
+    ]
+
+
+
+
 
 admin.site.register(StoryCategory, CategortAdmin) 
 admin.site.register(New_word_story, New_word_story_Admin) 
 admin.site.register(Story, StoryAdmin) 
 admin.site.register(StoryRaiting) 
 admin.site.register(StoryComment) 
+admin.site.register(ModelToken, Model_token_Admin) 
 
 
 

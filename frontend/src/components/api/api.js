@@ -15,13 +15,13 @@ export const usersAPI = {
             return res.data.usersdb
         })
     },
-    login(){
-        return axios.post("/login/", {"email": email, "password": password}).then(
-            result => {
-                console.log(result);
-            }
-        )
-    }
+    // login(){
+    //     return axios.post("/login/", {"email": email, "password": password}).then(
+    //         result => {
+    //             console.log(result);
+    //         }
+    //     )
+    // }
 }
 
 export const storyAPI = {

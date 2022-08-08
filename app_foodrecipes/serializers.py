@@ -5,11 +5,6 @@ from rest_framework import serializers
 from . import models
 import base64
 
-class UserSerializer(serializers.ModelSerializer): # сериализатор(конвертер данные в JSON)
-
-    class Meta:
-        model = User
-        fields = '__all__'
 
 
 class StorySerializer(serializers.ModelSerializer):
@@ -36,15 +31,40 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         # fields = '__all__'
-        fields = ['token', 'usernam','fullname', 'password']
+        fields = ['token', 'username','fullname', 'password']
     def get_token(self, obj):
-        try:
-            return str(obj.username).encode()
+        try:            
+            return base64.b64encode(str(obj.username).encode()).decode()
+    
         except Exception as error:
+            print(error)
             return None
 
     def get_fullname(self, obj):
         try:
-            return f"{obj.first_name}"
+            return f"{obj.first_name} {obj.last_name}"
         except Exception as error:
+            print(error)
             return None
+
+
+class AllUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
+class ModelTokenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ModelToken
+        fields = '__all__'
+
+
+class ModelChatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Chat_model       
+        fields = '__all__'
+
+
+
+
+   

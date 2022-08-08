@@ -4,6 +4,7 @@ import { requestStories, requestWords } from "../../redux/story-reducer";
 import s from './story.module.css';
 import {Link} from "react-router-dom"
 import Paginator from "../common/paginator/paginator";
+import Loader from "../common/loader/loader";
 
 
 
@@ -18,7 +19,8 @@ export default function Story() {
     const {
         pageSize:pageSize,
         totalStoriesCount,
-        currentPage
+        currentPage,
+        loading
     } = forPagination
 
     useEffect(() => {
@@ -45,11 +47,22 @@ export default function Story() {
 
             <Paginator currentPage={currentPage} totalStoriesCount={totalStoriesCount} pageSize={pageSize} onPageChanged = {onPageChanged}  />
 
+
+        {loading && 
+            <div className="d-flex justify-content-center">
+                <Loader/>
+            </div>
+        }
+        
+           
+            
+
             <div className={s.storyBlocks}>
                 {stories.map(item => {
                     return (
                         <div key={item.id} className={s.storyBlock}>
                             <h4>{item.title}</h4>
+                            <img src={`${item.image}`}/>
                             <p>картинка</p>                          
                             <Link to={`/story/${item.id}`} className="nav-link active" aria-current="page" ><button>подробнее</button></Link>
                             

@@ -11,4 +11,8 @@ urlpatterns = [
     path(route='api/story_by_id/<story_id>/', view=views.get_story_by_id),
 
     path(route='login/', view= views.login, name='login'),
+
+    path(route='chat/', view=views.lobby, name='lobby'),
+
+
 ]

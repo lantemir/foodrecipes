@@ -22,6 +22,12 @@ export default function Navbar() {
               <li className="nav-item">
                 <NavLink to="/login" className="nav-link" href="#">Login</NavLink>
               </li>
+              <li className="nav-item">
+                <NavLink to="/users" className="nav-link" href="#">Users</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/chat" className="nav-link" href="#">Chat</NavLink>
+              </li>
               <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
@@ -42,8 +48,9 @@ export default function Navbar() {
         </div>
       </nav>
       <Outlet />
-
-      <footer>2022</footer>
+      
+      <footer>Footer 2022</footer>
+      
     </div>
   )
 }

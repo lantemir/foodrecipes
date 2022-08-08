@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from email.policy import default
 from pathlib import Path
 from datetime import timedelta
 
@@ -32,6 +33,8 @@ CORS_ALLOW_ALL_ORIGINS = True #включить для реакта
 # Application definition
 
 INSTALLED_APPS = [
+    'channels', # websoccet for chat
+
     'grappelli',  #подключаем грапели админку красивый дизайн и в url не забыть
 
     'django.contrib.admin',
@@ -44,10 +47,23 @@ INSTALLED_APPS = [
     
 
     'rest_framework', # скченая pip install djangorestframework
-    'rest_framework_simplejwt', # для jwt токенов
+    'rest_framework_simplejwt', # для jwt токенов    
 
     'app_foodrecipes',
+
+   
 ]
+
+#чат
+ASGI_APPLICATION = 'backend_settings.asgi.application'
+#чат 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    }
+}
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -138,8 +154,28 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+if DEBUG:
+    STATIC_URL = 'static/'
+    # STATIC_ROOT = Path(BASE_DIR / 'static')
+    STATICFILES_DIRS = [
+        Path(BASE_DIR / 'static_external'),
+        Path(BASE_DIR / 'static'),
+        Path(BASE_DIR / 'frontend/build/static'),
+        Path(BASE_DIR / 'frontend/public/static'),
+    ]
+else:
+    STATIC_URL = '/static/'
+    STATIC_ROOT = Path(BASE_DIR / 'static')
 
+
+    STATICFILES_DIRS = [
+        Path(BASE_DIR / 'static_external'),
+        # Path(BASE_DIR / 'static'),
+        Path(BASE_DIR / 'frontend/build/static'),
+        Path(BASE_DIR / 'frontend/public/static'),
+    ]
+
+     # python manage.py collectstatic
 MEDIA_URL = 'media/'
 MEDIA_ROOT = Path(BASE_DIR, 'static/media')
 
@@ -195,4 +231,6 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+
 

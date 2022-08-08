@@ -17,6 +17,8 @@ import LoginForm from './components/login/login';
 
 import Story from './components/story/story';
 import Storyinfo from './components/story/storyinfo';
+import Users from './components/users/users';
+import ChatPage from './components/chat/chat';
 import "./css/my.css";
 import "./css/bootstrap/bootstrap.css";
 
@@ -31,6 +33,8 @@ export default function App() {
         <Route path='story' element ={<Story/>} />
         <Route path='story/:id' element ={<Storyinfo/>} />
         <Route path='login' element ={<LoginForm/>} />
+        <Route path='users' element = {<Users/> } />
+        <Route path='chat' element= {<ChatPage/> } />
       </Route>
     </Routes>
   )

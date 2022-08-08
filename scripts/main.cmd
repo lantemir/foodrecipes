@@ -19,6 +19,19 @@ pip install --upgrade pip
 
 
 
+#безопасность запросов
+pip install django-cors-headers 
+
+# админка
+pip install django-grappelli
+
+# rest запросы
+pip install djangorestframework 
+
+# токены
+pip install djangorestframework-simplejwt
+
+
 # "построчно" читает данные с файла и устанавливает эти библиотеки в активированное виртуальное окружение
 pip install -r requirements.txt
 
@@ -83,3 +96,39 @@ https://www.youtube.com/watch?v=78PTvj2wYH8&list=PLA0M1Bcd0w8zPwP7t-FgwONhZOHt9r
 
 # 1 вопросы 
 картинки сохранение и вывод
+
+
+
+# для websoccet например для чатов
+pip install channels
+pip install channels-redis
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 2022 08 02 - collectstatic, static,  картинки loader
+# https://www.youtube.com/watch?v=eY12ba1yrQQ&list=PLFH0jFGRecS0btzEqlp6f4Ua8FwJYkH1m&index=1
+

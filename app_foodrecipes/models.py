@@ -1,6 +1,11 @@
+from datetime import datetime
+from distutils.command.upload import upload
+from enum import auto
 from django.db import models
 from django.core.validators import FileExtensionValidator, MinValueValidator, MaxValueValidator #проверки валидации
 from django.contrib.auth.models import User
+from django.utils import timezone
+from psycopg2 import Time
 
 # Create your models here.
 
@@ -70,11 +75,12 @@ class Story(models.Model):
         editable=True,
         blank=True, #отображение в модельке админ
         
-        default="img/story/default/redefault_story.jpg",
+        default="storyimg/redefault_story.jpg",
         verbose_name="Заставка:",
         help_text='<small class="text-muted">это наш заставка</small><hr><br>',
         
         validators=[FileExtensionValidator(['jpg', 'png'])],
+        upload_to= 'storyimg/',
         max_length=100,
     )
 
@@ -285,3 +291,143 @@ class StoryComment(models.Model):
 
     def __str__(self) -> str:
         return f'{self.comment_text[:50:1]}' 
+
+
+
+class ModelToken(models.Model):   
+
+    user = models.OneToOneField(        
+        error_messages=False,
+        primary_key=False,
+       
+        unique=True,
+        editable=True,
+        blank=True,
+        null=True,
+        default= None,
+        verbose_name="Владелец токена",
+        help_text='<small class="text-muted">кому был выдан токен</small><hr><br>',
+
+        to=User,
+        on_delete=models.CASCADE, #CASCADE SET_NULL DO_NOTHING
+       
+    )
+
+    token = models.SlugField(
+        primary_key=False,
+        unique=True,
+        editable=True,
+        blank=True,
+       
+        default="",
+        verbose_name="Токен",
+        help_text='<small class="text-muted">это строка токена</small><hr><br>',
+        max_length=500,
+        allow_unicode=False,
+    )
+
+    datetime_field = models.DateTimeField(       
+        db_index= True,
+        
+        error_messages=False,
+        primary_key=False,
+        unique=False,
+        editable=True,
+        blank=True,
+        null=True,
+        default=timezone.now,
+        verbose_name='Время создания токена',
+        help_text='<small class="text-muted">время</small><hr><br>',
+
+        auto_now = False,
+        auto_now_add = False,
+    )
+
+    class Meta:
+        app_label = 'auth' # для отображения в админке и ещё надо изменить и добавить в apps.py
+        ordering = ('datetime_field', 'user') # сортировка сначала по title потом по dexcription
+        verbose_name = 'Токен'    
+        verbose_name_plural = 'Токены'
+
+    def __str__(self) -> str:
+        return f'{self.datetime_field} : {self.user} {self.token[:10]}...' 
+
+
+
+
+
+class Chat_model(models.Model):   
+
+    # user = models.ManyToOneRel(        
+    #     error_messages=False,
+    #     primary_key=False,
+       
+    #     unique=True,
+    #     editable=True,
+    #     blank=True,
+    #     null=True,
+    #     default= None,
+    #     verbose_name="Владелец токена",
+    #     help_text='<small class="text-muted">кому был выдан токен</small><hr><br>',
+
+    #     to=User,
+    #     on_delete=models.CASCADE, #CASCADE SET_NULL DO_NOTHING   
+       
+    # )
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, verbose_name="Владелец сообщения",null=True, editable=True)
+
+    photo = models.SlugField(
+        primary_key=False,
+        unique=False,
+        editable=True,
+        blank=True,
+       
+        default="media/chat_img/default_chat.jpg",
+        verbose_name="фото url",
+        help_text='<small class="text-muted">фото url</small><hr><br>',
+        max_length=500,
+        allow_unicode=False,
+    )
+
+    message = models.TextField(
+        primary_key=False,
+        unique=False,
+        editable=True,
+        blank=True, #можно оставить пустым
+       
+        default="Описание",
+        verbose_name="Описание",
+        help_text='<small class="text-muted">это наш заголовок</small><hr><br>',
+    )
+
+    datetime_field = models.DateTimeField(       
+        db_index= True,
+        
+        error_messages=False,
+        primary_key=False,
+        unique=False,
+        editable=True,
+        blank=True,
+        null=True,
+        default=timezone.now,
+        verbose_name='Время создания сообщения',
+        help_text='<small class="text-muted">время</small><hr><br>',
+
+        auto_now = False,
+        auto_now_add = False,
+    )
+
+    class Meta:
+        app_label = 'app_foodrecipes' # для отображения в админке и ещё надо изменить и добавить в apps.py
+        ordering = ('datetime_field', 'user') # сортировка сначала по title потом по dexcription
+        verbose_name = 'чат'    
+        verbose_name_plural = 'чаты'
+
+    def __str__(self) -> str:
+        return f'{self.datetime_field} : {self.user}' 
+            
+
+
+
+ 
