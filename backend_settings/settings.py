@@ -10,9 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+
 from email.policy import default
 from pathlib import Path
 from datetime import timedelta
+
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -73,6 +76,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'backend_settings.urls'
@@ -167,6 +172,7 @@ else:
     STATIC_URL = '/static/'
     STATIC_ROOT = Path(BASE_DIR / 'static')
 
+    STATIC_DIR = Path(BASE_DIR / 'static')
 
     STATICFILES_DIRS = [
         Path(BASE_DIR / 'static_external'),
@@ -174,6 +180,7 @@ else:
         Path(BASE_DIR / 'frontend/build/static'),
         Path(BASE_DIR / 'frontend/public/static'),
     ]
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 
      # python manage.py collectstatic
 MEDIA_URL = 'media/'
