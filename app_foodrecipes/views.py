@@ -23,6 +23,13 @@ from django.utils import timezone
 # Create your views here.
 
 
+
+def index(request):
+    context = {}
+
+    return render(request, 'index.html', context)
+
+
 @api_view(http_method_names=["GET", "POST"])
 @permission_classes([AllowAny])
 @csrf_exempt
